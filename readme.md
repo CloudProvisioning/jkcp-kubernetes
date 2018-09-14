@@ -1,0 +1,1 @@
+Kubernetes-related repo to store files for Cloud Provisioning project activities

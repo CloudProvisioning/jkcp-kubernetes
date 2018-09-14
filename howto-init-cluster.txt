@@ -1,0 +1,43 @@
+Kubernetes cluster initialization
+
+Prerequisites:
+- Installed Ubuntu 14+
+- Installed packages:
+    - curl
+    - docker.io
+
+Steps, in terminal:
+
+    # Step 1 - Disable swap
+    sudo swapoff -a
+
+    # Step 2 - This command can only be used by root
+    sudo su
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+    # Step 3 - add kubernetes repo and update cache
+    apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+    apt update
+
+    # Step 4 - install Kubernetes with all dependencies
+    apt install kubeadm
+
+    # OPTIONAL! If docker services won't start automatically
+    systemctl enable docker.service
+
+    # Step 5 - init cluster
+    kubeadm init --pod-network-cidr=10.244.0.0/16
+
+    # Step 6 - create config folders (also listed in output after  previous action)
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+    # Step 7 - Install Flannel
+    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+For joining new node it is needed to make steps 1-4 and make command 'kubeadm join', 
+full version of this command will be printed after successfull kubeadm init.
+
+# Check for everything works fine (init may take several minutes)
+kubectl -n kube-system get pods

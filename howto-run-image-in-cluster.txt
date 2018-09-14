@@ -1,0 +1,10 @@
+Run Docker image in Kubernetes cluster
+
+Prerequisites:
+- initialized Kubernetes cluster with minimum one connected node 
+  or enabled deployment on master node
+
+Steps, in terminal:
+
+# Step 1 - Run image by command with replacing parameters
+kubectl run flask --image={repository_name}/{image_name}:{image_tag} --port={port_number}​
