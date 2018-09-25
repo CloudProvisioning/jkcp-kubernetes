@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flask-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-frontend
+      tier: flask-backend
+  template:
+    metadata:
+      labels:
+        app: flask-frontend
+        tier: flask-backend
+    spec:
+      containers:
+        - name: flask-frontend
+          image: "jkdc/angular-demo-app:latest"
+          ports:
+            - containerPort: 80
+            - containerPort: 443 

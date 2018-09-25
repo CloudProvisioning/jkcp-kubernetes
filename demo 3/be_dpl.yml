@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flask-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-backend
+      tier: mycockroach-cockroachdb-public
+  template:
+    metadata:
+      labels:
+        app: flask-backend
+        tier: mycockroach-cockroachdb-public
+    spec:
+      containers:
+        - name: flask-backend
+          image: "jkdc/flask-demo-app-v3:initial"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
