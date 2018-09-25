@@ -1,0 +1,44 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: cockroach1
+  labels:
+    type: local
+    app: cockroachdb
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/1"
+---    
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: cockroach2
+  labels:
+    type: local
+    app: cockroachdb
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/2"  
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: cockroach3
+  labels:
+    type: local
+    app: cockroachdb
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/3"      
