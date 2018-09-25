@@ -15,10 +15,10 @@ spec:
 #      hosts:
 #      - api.sample.com
   rules:
-  - host: api.sample.com
+  - host: demo.sample.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: flask-service
+          serviceName: flask-frontend
           servicePort: 8080
