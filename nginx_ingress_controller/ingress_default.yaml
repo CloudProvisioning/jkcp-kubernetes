@@ -10,8 +10,8 @@ metadata:
     # ingress.kubernetes.io/ssl-passthrough: "true"
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  tls:
-    - secretName: nginx-ssl
+#  tls:
+#    - secretName: nginx-ssl
 #      hosts:
 #      - api.sample.com
   rules:

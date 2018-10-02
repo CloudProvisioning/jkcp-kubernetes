@@ -8,10 +8,10 @@ metadata:
 #    nginx.org/ssl-services: "flask-service"
 #    ingress.kubernetes.io/ssl-redirect: "true"
     ingress.kubernetes.io/ssl-passthrough: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
-    - secretName: nginx-ssl
+       - secretName: nginx-ssl
 #      hosts:
 #      - api.sample.com
   rules:
@@ -21,4 +21,4 @@ spec:
       - path: /
         backend:
           serviceName: flask-frontend
-          servicePort: 8080
+          servicePort: 4200
