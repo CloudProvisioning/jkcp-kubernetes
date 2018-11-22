@@ -1,0 +1,58 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flask-demo-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-demo-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: flask-demo-app
+        tier: backend
+    spec:
+      containers:
+        - name: flask-backend-demo-app
+          image: "jkdc/flask-demo-app-v4:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: db.host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: db.port
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: db.user
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: db.name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-backend
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8000
+      nodePort: 31651
+  selector:
+    app: flask-demo-app
+    tier: backend
+  type: NodePort
