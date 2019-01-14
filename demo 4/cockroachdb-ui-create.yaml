@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockroachdb-public-ui
+  labels:
+    app: cockroachdb
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+    nodePort: 31010
+  selector:
+    app: cockroachdb
