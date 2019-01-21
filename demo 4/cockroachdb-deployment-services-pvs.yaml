@@ -92,7 +92,7 @@ spec:
   ports:
   - port: 26257
     targetPort: 26257
-    name: grpc
+    name: tcp
   - port: 8080
     targetPort: 8080
     name: http
@@ -114,7 +114,7 @@ spec:
   ports:
   - port: 26257
     targetPort: 26257
-    name: grpc
+    name: tcp
   - port: 8080
     targetPort: 8080
     name: http
@@ -144,6 +144,8 @@ spec:
   replicas: 3
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: cockroachdb
     spec:
@@ -165,7 +167,7 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 26257
-          name: grpc
+          name: tcp
         - containerPort: 8080
           name: http
         livenessProbe:
@@ -221,6 +223,9 @@ metadata:
     app: cockroachdb
 spec:
   template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: cluster-init
