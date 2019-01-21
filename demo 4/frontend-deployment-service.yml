@@ -19,8 +19,30 @@ spec:
           image: "jkdc/vue-demo-app:latest"
           ports:
             - containerPort: 80
+              name: http
             # Next will be used for https
             # - containerPort: 443
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          env:
+            - name: KUBERNETES_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: kubernetes.ip
+            - name: BACKEND_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-app-config-map
+                  key: backend.port
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/init-backend-entry.sh"]
 ---
 apiVersion: v1
 kind: Service

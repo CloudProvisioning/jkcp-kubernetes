@@ -10,4 +10,5 @@ data:
   db.name: 'cp_test_db'
   db.host: 'cockroachdb-public'
   db.port: '26257'
-  backend.host: 'flask-backend'
+  kubernetes.ip: '192.168.203.168'
+  backend.port: '31651'
