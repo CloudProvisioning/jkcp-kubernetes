@@ -48,7 +48,7 @@ Steps:
     
 	# locate inside the jkcp-kubernetes.git repo demo 4 folder and run
     
-    ./init-demo-app-config-map.sh    
+    	./init-demo-app-config-map.sh    
 	kubectl create -f demo-app-config-map.yml
     
 	# check it
@@ -111,8 +111,7 @@ Steps:
 	# check it
 	npm run serve
 
-    # go to http://localhost:8080 and make sure it works and then disable by ctrl+c in console
-	# go to src/services/data-service.js and change serverUrl variable to 'http://<your-cluster-ip>:31651'
+    	# go to http://localhost:8080 and make sure it works and then disable by ctrl+c in console
 	# build frontend project
 	npm run build
  
@@ -123,7 +122,8 @@ Steps:
 	
 ## 10. Deploy frontend application:
 	# locate inside the jkcp-kubernetes.git repo demo 4 folder, open frontend-deployment-service.yml
-	# change Deployment section, from image: "jkdc/vue-demo-app:latest" to image: "<your-docker-hub-username>/vue-demo-app:latest"
+	# change Deployment section, from image: "jkdc/vue-demo-app:latest" to image: "<your-docker-hub-username>/vue-demo-		# app:latest"
+	
 	kubectl create -f frontend-deployment-service.yml
 	
 ## 11. Run application:
@@ -131,7 +131,7 @@ Steps:
 	# View all data page show all data from database, serverId provide id of server which was generate particular row
 	# Add data page allows to add specified number of new rows to database, data will generate by server
 	# Remove data page allows to delete specified number of new rows from database
-	
+
 ## 12. OPTIONAL. Deploy Kubernetes dashboard:
 	# locate inside the jkcp-kubernetes.git repo demo 4 folder and run
 	kubectl create -f k8s-dashboard-deployment-service.yaml
@@ -154,6 +154,23 @@ Steps:
 	  selector:
 		app: cockroachdb
 	# go to http://<your-cluster-ip>:31010
+
+## 14. OPTIONAL. Istio installing.
+	# For installing Istio you could use next manual:
+	https://istio.io/docs/setup/kubernetes/quick-start/
+	
+	# For inject envoy-proxe to demo application container there is needed to make next updates during applying of some yaml 	 # files:
+	
+	kubectl apply -f <(istioctl kube-inject -f frontend-deployment-service.yml)
+	kubectl apply -f <(istioctl kube-inject -f backend-deployment-service.yml)
+	kubectl apply -f <(istioctl kube-inject -f pgweb-deployment-service.yml)
+	
+	# Note: for another containers there MUST NOT be port with name "grps" because it causes envoy-proxy injecting without 
+	# any confirmation. So for correct CockroachDB install you have to use last repository version.
+	
+## 15. OPTIONAL. Istio. Kiali dashboard install.
+	# For installing Kiali you could use next manual:
+	https://istio.io/docs/tasks/telemetry/kiali/
 	
 # Known issues:
 - hardcoded link in frontend application  (fixed)
